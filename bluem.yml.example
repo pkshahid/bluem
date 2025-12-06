@@ -1,0 +1,29 @@
+project_name: demo_myshop
+project_slug: myshop
+
+registry: "myshop"
+image: "web"
+tag: "latest"
+
+app_port: 8000
+green_port: 8010
+blue_port: 8011
+health_path: "/health/"
+
+network_name: "app-network"
+network_external: true
+
+failover_monitor_timeout: 25s
+container_drain_timeout: 10s
+health_check_delay: 2s
+
+proxy:
+  type: "traefik"         # or "nginx"
+  port: 8000
+
+services:
+  app:
+    enabled: true
+    env_file: "./.env.django"
+    static_volume: "./static:/app/static"
+    media_volume: "./media:/app/media"

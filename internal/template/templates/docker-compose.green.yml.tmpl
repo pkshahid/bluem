@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  {{ .cfg.ProjectSlug }}_green:
+    image: "{{ .cfg.FullImage }}"
+    container_name: "{{ .cfg.ProjectSlug }}_green"
+    env_file:
+      - {{ .cfg.Services.App.EnvFile }}
+    ports:
+      - "{{ .cfg.GreenPort }}:{{ .cfg.AppPort }}"
+    networks:
+      - {{ .cfg.NetworkName }}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:{{ .cfg.AppPort }}{{ .cfg.HealthPath }} || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+networks:
+  {{ .cfg.NetworkName }}:
+    {{ if .cfg.NetworkExternal }}
+    external: true
+    name: {{ .cfg.NetworkName }}
+    {{ else }}
+    driver: bridge
+    {{ end }}

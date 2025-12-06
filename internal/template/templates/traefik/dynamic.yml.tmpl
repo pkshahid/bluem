@@ -1,0 +1,17 @@
+http:
+  routers:
+    {{ .cfg.ProjectSlug }}:
+      rule: "PathPrefix(`/`)"
+      entryPoints: ["web"]
+      service: {{ .cfg.ProjectSlug }}_green
+
+  services:
+    {{ .cfg.ProjectSlug }}_green:
+      loadBalancer:
+        servers:
+          - url: "http://{{ .cfg.ProjectSlug }}_green:{{ .cfg.AppPort }}"
+
+    {{ .cfg.ProjectSlug }}_blue:
+      loadBalancer:
+        servers:
+          - url: "http://{{ .cfg.ProjectSlug }}_blue:{{ .cfg.AppPort }}"

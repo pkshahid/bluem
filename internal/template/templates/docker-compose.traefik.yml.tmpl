@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    command:
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--providers.file.watch=true"
+      - "--api.dashboard=true"
+    ports:
+      - "{{ .cfg.Proxy.Port }}:{{ .cfg.Proxy.Port }}"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml
+      - ./traefik/dynamic:/etc/traefik/dynamic
+    networks:
+      - {{ .cfg.NetworkName }}
+
+networks:
+  {{ .cfg.NetworkName }}:
+    {{ if .cfg.NetworkExternal }}
+    external: true
+    name: {{ .cfg.NetworkName }}
+    {{ else }}
+    driver: bridge
+    {{ end }}
