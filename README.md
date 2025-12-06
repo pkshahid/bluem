@@ -348,5 +348,3 @@ Contributions welcome!
 ## 🙌 Final Notes
 
 BLUEM v0.1.0 is a production-ready solution for zero-downtime deployments using Docker. It is ideal for small to medium applications that want the safety of blue-green deployment without heavy systems like Kubernetes, Consul, or Spinnaker.
-
-If you'd like help generating a project logo, GitHub Actions CI, or a Homebrew tap — just ask!
