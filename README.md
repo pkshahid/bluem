@@ -51,7 +51,7 @@ chmod +x /usr/local/bin/bluem
 ### Option 2 — Build from source
 
 ```bash
-git clone https://github.com/<your-user>/bluem
+git clone https://github.com/pkshahid/bluem
 cd bluem
 go build -o bluem ./cmd/bluem
 ```
